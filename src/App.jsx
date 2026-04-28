@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -19,6 +19,9 @@ import {
   Clock3,
   Star,
 } from "lucide-react";
+import { SiteFooter, SiteHeader } from "./components/SiteChrome";
+import CursorAura from "./components/CursorAura";
+import { caseStudiesData } from "./data/caseStudiesData";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -44,7 +47,7 @@ function SectionHeading({ eyebrow, title, desc, light = false }) {
         {eyebrow}
       </div>
       <h2
-        className={`font-serif text-4xl font-black leading-none tracking-[-0.03em] md:text-6xl ${
+        className={`font-sans text-4xl font-bold leading-none tracking-[-0.03em] md:text-6xl ${
           light ? "text-white" : "text-[#080810]"
         }`}
       >
@@ -93,18 +96,18 @@ function FloatingConsultCTA() {
 
 export default function PodospherePortfolio() {
   const [activePain, setActivePain] = useState(0);
-
-  const nav = useMemo(
-    () => [
-      ["Home", "#home"],
-      ["Why Us", "#why-us"],
-      ["Solutions", "#solutions"],
-      ["Case Studies", "#case-studies"],
-      ["Leadership", "#leadership"],
-      ["Book Call", "#book-call"],
-    ],
-    []
-  );
+  const interactiveShowcase = [
+    {
+      title: "AI Workflow Orchestration",
+      desc: "Interactive low-code automation flow with agent logic and smart branching.",
+      image: "/ai-workflow-showcase.png",
+    },
+    {
+      title: "Modern AI Assistant Experience",
+      desc: "Clean conversational interface design focused on high usability and speed.",
+      image: "/gemini-ui-showcase.png",
+    },
+  ];
 
   const trustStats = [
     { value: "70%", label: "Tech-Led Positioning", desc: "Website, app, ERP, CRM, AI automation, and consulting-first transformation." },
@@ -218,32 +221,7 @@ export default function PodospherePortfolio() {
     "Book consultancy page with appointment CTA",
   ];
 
-  const caseStudies = [
-    {
-      company: "Fintech Startup Expansion",
-      type: "Technology + CRO",
-      title: "From scattered operations to a structured digital growth stack.",
-      result: "A consulting-led engagement model where website funnels, CRM visibility, automation workflows, and leadership reporting were aligned for scale.",
-    },
-    {
-      company: "D2C Brand Growth Sprint",
-      type: "Marketing + Conversion",
-      title: "Turn ad traffic into a more qualified enquiry pipeline.",
-      result: "Creative strategy, landing-page thinking, and performance-led execution built a stronger path from attention to action.",
-    },
-    {
-      company: "B2B SaaS Sales Enablement",
-      type: "Sales Systems",
-      title: "Build a sales process that does not depend on guesswork.",
-      result: "Sales hiring support, scripts, SOPs, and revenue workflow structure were positioned as a repeatable growth layer.",
-    },
-    {
-      company: "Ops Security Modernization",
-      type: "Security + Monitoring",
-      title: "Improve operational confidence with intelligence-led visibility.",
-      result: "Cyber security planning, surveillance thinking, and monitoring concepts were packaged into a future-ready strategic layer.",
-    },
-  ];
+  const caseStudies = caseStudiesData;
 
   const founderCards = [
     {
@@ -269,78 +247,51 @@ export default function PodospherePortfolio() {
 
   return (
     <div className="min-h-screen bg-[#f7f6f3] text-[#080810]">
+      <CursorAura />
       <FloatingConsultCTA />
-
-      <header className="sticky top-0 z-50 border-b border-[#e8e6e0] bg-[#f7f6f3]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#2233ff] text-lg font-black text-white shadow-lg shadow-[#2233ff]/25">
-              P
-            </div>
-            <div>
-              <div className="font-serif text-2xl font-black tracking-tight">Podosphere</div>
-              <div className="text-[10px] font-extrabold uppercase tracking-[0.26em] text-[#2233ff]">Technologies</div>
-            </div>
-          </div>
-
-          <nav className="hidden items-center gap-6 xl:flex">
-            {nav.map(([label, href]) => (
-              <a key={label} href={href} className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#5a5a72] transition hover:text-[#2233ff]">
-                {label}
-              </a>
-            ))}
-          </nav>
-
-          <a
-            href="#book-call"
-            className="rounded-full bg-[#2233ff] px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.12em] text-white shadow-lg shadow-[#2233ff]/25 transition hover:-translate-y-0.5"
-          >
-            Book Strategy Call
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section id="home" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,51,255,0.14),transparent_28%),radial-gradient(circle_at_left,rgba(34,51,255,0.08),transparent_32%)]" />
-        <div className="relative mx-auto grid min-h-[92vh] max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid min-h-[78vh] max-w-7xl gap-7 px-5 py-10 lg:h-[calc(100vh-84px)] lg:grid-cols-[1.08fr_0.92fr] lg:gap-6 lg:px-8 lg:py-5 xl:py-6">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeUp}
             transition={{ duration: 0.65 }}
-            className="flex flex-col justify-center"
+            className="flex flex-col justify-center lg:overflow-hidden"
           >
-            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[#2233ff]/15 bg-[#2233ff]/5 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#2233ff]">
+            <div className="mb-3 inline-flex w-fit items-center gap-2 rounded-full border border-[#2233ff]/15 bg-[#2233ff]/5 px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#2233ff]">
               <Sparkles className="h-4 w-4" />
               Consulting-led growth systems for ambitious businesses
             </div>
 
-            <h1 className="max-w-4xl font-serif text-5xl font-black leading-[0.95] tracking-[-0.05em] md:text-7xl xl:text-[5.6rem]">
-              The partner you call when your business needs <span className="text-[#2233ff] italic">better systems</span>, stronger <span className="text-[#2233ff] italic">lead flow</span>, and sharper <span className="text-[#2233ff] italic">execution</span>.
+            <h1 className="max-w-4xl font-sans text-4xl font-bold leading-[0.95] tracking-[-0.05em] md:text-5xl xl:text-[4.2rem]">
+              The partner you call when your business needs <span className="text-[#2233ff]">better systems</span>, stronger <span className="text-[#2233ff]">lead flow</span>, and sharper <span className="text-[#2233ff]">execution</span>.
             </h1>
 
-            <p className="mt-8 max-w-2xl text-lg leading-8 text-[#5a5a72]">
+            <p className="mt-4 max-w-2xl text-[15px] leading-7 text-[#5a5a72] lg:max-w-xl">
               Podosphere Technologies helps businesses move from scattered growth efforts to structured execution across software, automation,
               marketing, sales enablement, cyber security, and intelligent monitoring. We do not just build assets. We build momentum.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-5 flex flex-wrap gap-3">
               <a
                 href="#book-call"
-                className="group inline-flex items-center gap-2 rounded-full bg-[#2233ff] px-7 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white shadow-[0_20px_60px_rgba(34,51,255,0.25)] transition hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-2 rounded-full bg-[#2233ff] px-6 py-3.5 text-sm font-extrabold uppercase tracking-[0.12em] text-white shadow-[0_20px_60px_rgba(34,51,255,0.25)] transition hover:-translate-y-0.5"
               >
                 Book Consultancy Call
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </a>
               <a
                 href="#solutions"
-                className="inline-flex items-center gap-2 rounded-full border border-[#080810] px-7 py-4 text-sm font-extrabold uppercase tracking-[0.12em] transition hover:bg-[#080810] hover:text-white"
+                className="inline-flex items-center gap-2 rounded-full border border-[#080810] px-6 py-3.5 text-sm font-extrabold uppercase tracking-[0.12em] transition hover:bg-[#080810] hover:text-white"
               >
                 Explore Solutions
               </a>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-2.5">
               {socials.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -349,7 +300,7 @@ export default function PodospherePortfolio() {
                     href={item.href}
                     target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d9d9e3] bg-white transition hover:border-[#2233ff] hover:text-[#2233ff]"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#d9d9e3] bg-white transition hover:border-[#2233ff] hover:text-[#2233ff]"
                     aria-label={item.label}
                   >
                     <Icon className="h-4 w-4" />
@@ -365,18 +316,18 @@ export default function PodospherePortfolio() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="relative"
           >
-            <div className="grid h-full gap-3 rounded-[2rem] bg-[#080810] p-3 shadow-[0_30px_90px_rgba(8,8,16,0.18)]">
+            <div className="grid h-full gap-2 rounded-[1.6rem] bg-[#080810] p-2 shadow-[0_30px_90px_rgba(8,8,16,0.18)] lg:max-h-[calc(100vh-140px)]">
               {trustStats.map((item, index) => (
                 <motion.div
                   key={item.label}
                   initial={{ opacity: 0, y: 25 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + index * 0.1, duration: 0.55 }}
-                  className="rounded-[1.7rem] border border-white/10 bg-white/[0.04] p-8 text-white transition hover:border-[#2233ff] hover:bg-[#2233ff]/10"
+                  className="rounded-[1.2rem] border border-white/10 bg-white/[0.04] p-5 text-white transition hover:border-[#2233ff] hover:bg-[#2233ff]/10"
                 >
-                  <div className="font-serif text-5xl font-black">{item.value}</div>
-                  <div className="mt-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white/50">{item.label}</div>
-                  <p className="mt-4 text-sm leading-7 text-white/65">{item.desc}</p>
+                  <div className="font-sans text-3xl font-bold md:text-4xl">{item.value}</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white/50">{item.label}</div>
+                  <p className="mt-2 text-xs leading-6 text-white/65 md:text-sm">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -396,6 +347,43 @@ export default function PodospherePortfolio() {
               <p className="mt-3 text-base leading-8 text-[#5a5a72]">{desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeading
+            eyebrow="Interactive product visuals"
+            title="Homepage experiences that feel alive, modern, and conversion-ready."
+            desc="We integrated interactive visual blocks inspired by real AI workflow and assistant interfaces to make the website more engaging."
+          />
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {interactiveShowcase.map((item, index) => (
+              <motion.article
+                key={item.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.25 }}
+                variants={fadeUp}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                whileHover={{ y: -8, scale: 1.01 }}
+                className="group overflow-hidden rounded-[2rem] border border-[#e8e6e0] bg-[#f7f6f3] shadow-[0_18px_50px_rgba(0,0,0,0.04)] transition hover:border-[#2233ff]"
+              >
+                <div className="overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-[280px] w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6 md:p-8">
+                  <h3 className="font-sans text-3xl font-bold tracking-[-0.03em]">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[#5a5a72]">{item.desc}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -439,7 +427,7 @@ export default function PodospherePortfolio() {
               <div className="inline-flex rounded-full bg-[#2233ff]/8 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#2233ff]">
                 What this really costs a business
               </div>
-              <h3 className="mt-6 font-serif text-4xl font-black leading-none tracking-[-0.03em]">
+              <h3 className="mt-6 font-sans text-4xl font-bold leading-none tracking-[-0.03em]">
                 {painPoints[activePain].title}
               </h3>
               <p className="mt-5 max-w-2xl text-base leading-8 text-[#5a5a72]">{painPoints[activePain].desc}</p>
@@ -483,13 +471,14 @@ export default function PodospherePortfolio() {
                   viewport={{ once: true, amount: 0.2 }}
                   variants={fadeUp}
                   transition={{ duration: 0.55, delay: index * 0.08 }}
-                  className="group rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 transition hover:-translate-y-1 hover:border-[#2233ff] hover:bg-[#2233ff]/10"
+                  whileHover={{ y: -8, scale: 1.01 }}
+                  className="group rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 transition hover:border-[#2233ff] hover:bg-[#2233ff]/10"
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2233ff]/15 text-[#8fa0ff]">
                     <Icon className="h-6 w-6" />
                   </div>
                   <div className="mt-6 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#8fa0ff]">{item.title}</div>
-                  <h3 className="mt-3 font-serif text-3xl font-black leading-tight tracking-[-0.03em]">{item.headline}</h3>
+                  <h3 className="mt-3 font-sans text-3xl font-bold leading-tight tracking-[-0.03em]">{item.headline}</h3>
                   <p className="mt-4 text-sm leading-7 text-white/65">{item.desc}</p>
                   <div className="mt-6 space-y-3">
                     {item.points.map((point) => (
@@ -506,12 +495,38 @@ export default function PodospherePortfolio() {
         </div>
       </section>
 
+      <section id="technology-consultancy" className="bg-[#080810] px-5 py-24 text-white lg:px-8">
+        <div className="mx-auto max-w-7xl rounded-[2rem] border border-white/15 bg-white/[0.03] p-8 md:p-12">
+          <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#8fa0ff]">Technology Consultancy</div>
+          <h3 className="mt-4 font-sans text-4xl font-bold leading-none tracking-[-0.03em] md:text-5xl">
+            Align product, automation, and operations with business growth goals.
+          </h3>
+          <p className="mt-6 max-w-3xl text-base leading-8 text-white/75">
+            From platform planning to CRM/ERP architecture, we provide strategic technology consulting that improves execution speed,
+            visibility, and process control. The focus is clear: right stack, right roadmap, right outcomes.
+          </p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {["Website and product roadmap", "Automation and reporting architecture", "Scalable systems for operations"].map((item) => (
+              <div key={item} className="rounded-[1.4rem] border border-white/15 bg-white/5 p-5 text-sm font-semibold">
+                {item}
+              </div>
+            ))}
+          </div>
+          <a
+            href="#book-call"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-[#2233ff] transition hover:-translate-y-0.5"
+          >
+            Book Technology Consultation <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+      </section>
+
       <section className="px-5 py-24 lg:px-8">
         <div className="mx-auto max-w-7xl rounded-[2rem] bg-[#2233ff] p-8 text-white md:p-12">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
             <div>
               <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-white/65">Kotech Digital Hub + Podo Sale</div>
-              <h3 className="mt-4 font-serif text-4xl font-black leading-none tracking-[-0.03em] md:text-5xl">
+              <h3 className="mt-4 font-sans text-4xl font-bold leading-none tracking-[-0.03em] md:text-5xl">
                 Marketing brings attention. Sales brings movement. Systems make both scalable.
               </h3>
               <p className="mt-6 max-w-2xl text-base leading-8 text-white/80">
@@ -564,7 +579,7 @@ export default function PodospherePortfolio() {
         </div>
       </section>
 
-      <section className="bg-[#080810] px-5 py-24 text-white lg:px-8">
+      <section id="products" className="bg-[#080810] px-5 py-24 text-white lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Expanded site map"
@@ -576,11 +591,24 @@ export default function PodospherePortfolio() {
           <div className="mt-14 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {featurePages.map((item, index) => (
               <div key={item} className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-6 transition hover:border-[#2233ff] hover:bg-[#2233ff]/10">
-                <div className="text-3xl font-serif font-black text-white/15">0{index + 1}</div>
+                <div className="text-3xl font-sans font-bold text-white/15">0{index + 1}</div>
                 <div className="mt-3 text-base font-semibold leading-8">{item}</div>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="whats-new-ai" className="bg-white px-5 py-24 lg:px-8">
+        <div className="mx-auto max-w-7xl rounded-[2rem] border border-[#e8e6e0] bg-[#f7f6f3] p-8 md:p-10">
+          <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#2233ff]">Whats New In AI</div>
+          <h3 className="mt-4 font-sans text-3xl font-bold leading-tight tracking-[-0.03em] md:text-4xl">
+            Practical AI updates for growth-focused businesses.
+          </h3>
+          <p className="mt-4 max-w-3xl text-base leading-8 text-[#5a5a72]">
+            We continuously monitor new AI capabilities across automation, marketing, sales workflows, and security so businesses can
+            adopt what works and ignore hype.
+          </p>
         </div>
       </section>
 
@@ -601,7 +629,8 @@ export default function PodospherePortfolio() {
                 viewport={{ once: true, amount: 0.2 }}
                 variants={fadeUp}
                 transition={{ duration: 0.55, delay: index * 0.06 }}
-                className="rounded-[2rem] border border-[#e8e6e0] bg-white p-8 shadow-[0_18px_50px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:border-[#2233ff]"
+                whileHover={{ y: -8 }}
+                className="rounded-[2rem] border border-[#e8e6e0] bg-white p-8 shadow-[0_18px_50px_rgba(0,0,0,0.04)] transition hover:border-[#2233ff]"
               >
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="rounded-full bg-[#2233ff]/8 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#2233ff]">
@@ -609,10 +638,10 @@ export default function PodospherePortfolio() {
                   </span>
                   <span className="text-sm font-semibold text-[#5a5a72]">{item.company}</span>
                 </div>
-                <h3 className="mt-6 font-serif text-3xl font-black leading-tight tracking-[-0.03em]">{item.title}</h3>
+                <h3 className="mt-6 font-sans text-3xl font-bold leading-tight tracking-[-0.03em]">{item.title}</h3>
                 <p className="mt-4 text-base leading-8 text-[#5a5a72]">{item.result}</p>
-                <a href="#book-call" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#2233ff]">
-                  Discuss a similar requirement <ArrowRight className="h-4 w-4" />
+                <a href={`/case-studies/${item.slug}`} className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#2233ff]">
+                  Open detailed case study <ArrowRight className="h-4 w-4" />
                 </a>
               </motion.div>
             ))}
@@ -643,7 +672,7 @@ export default function PodospherePortfolio() {
                   <img src={founder.image} alt={founder.name} className="aspect-[4/5] w-full object-cover rounded-[1.5rem]" />
                   <div>
                     <div className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#2233ff]">Leadership</div>
-                    <h3 className="mt-3 font-serif text-3xl font-black">{founder.name}</h3>
+                    <h3 className="mt-3 font-sans text-3xl font-bold">{founder.name}</h3>
                     <div className="mt-2 text-sm font-semibold uppercase tracking-[0.12em] text-[#5a5a72]">{founder.role}</div>
                     <p className="mt-5 text-base leading-8 text-[#5a5a72]">{founder.bio}</p>
                   </div>
@@ -673,7 +702,7 @@ export default function PodospherePortfolio() {
           <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
             <div>
               <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-white/65">Primary conversion action</div>
-              <h2 className="mt-4 font-serif text-4xl font-black leading-none tracking-[-0.03em] md:text-6xl">
+              <h2 className="mt-4 font-sans text-4xl font-bold leading-none tracking-[-0.03em] md:text-6xl">
                 Book a consultancy call and find the bottleneck that is slowing your growth.
               </h2>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80">
@@ -716,55 +745,7 @@ export default function PodospherePortfolio() {
         </div>
       </section>
 
-      <footer className="bg-[#080810] px-5 py-14 text-white lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
-          <div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#2233ff] text-lg font-black text-white">P</div>
-              <div>
-                <div className="font-serif text-2xl font-black">Podosphere Technologies</div>
-                <div className="text-[10px] font-extrabold uppercase tracking-[0.26em] text-[#8fa0ff]">One stop growth system</div>
-              </div>
-            </div>
-            <p className="mt-5 max-w-xl text-sm leading-8 text-white/60">
-              Consulting-led technology, automation, marketing, sales enablement, cyber security, and intelligent monitoring solutions for businesses that want more clarity and better growth execution.
-            </p>
-          </div>
-
-          <div>
-            <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-white/45">Contact</div>
-            <div className="mt-5 space-y-4 text-sm text-white/75">
-              <a href="tel:+918595611983" className="flex items-start gap-3 hover:text-white"><Phone className="mt-1 h-4 w-4" /> +91 8595611983</a>
-              <a href="mailto:sushant.singh@podospheretechnologies.com" className="flex items-start gap-3 hover:text-white"><Mail className="mt-1 h-4 w-4" /> sushant.singh@podospheretechnologies.com</a>
-              <div className="flex items-start gap-3"><MapPin className="mt-1 h-4 w-4" /> 107, Amarpali Plaza, Amarpali Circle, Vaishali Nagar, Jaipur 302021</div>
-            </div>
-          </div>
-
-          <div>
-            <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-white/45">Social & Links</div>
-            <div className="mt-5 flex flex-wrap gap-3">
-              {socials.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target={item.href.startsWith("http") ? "_blank" : undefined}
-                    rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/75 transition hover:border-[#2233ff] hover:text-white"
-                    aria-label={item.label}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </a>
-                );
-              })}
-            </div>
-            <a href="#book-call" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#8fa0ff]">
-              Book your consultancy call <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
