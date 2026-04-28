@@ -96,18 +96,9 @@ function FloatingConsultCTA() {
 
 export default function PodospherePortfolio() {
   const [activePain, setActivePain] = useState(0);
-  const interactiveShowcase = [
-    {
-      title: "AI Workflow Orchestration",
-      desc: "Interactive low-code automation flow with agent logic and smart branching.",
-      image: "/ai-workflow-showcase.png",
-    },
-    {
-      title: "Modern AI Assistant Experience",
-      desc: "Clean conversational interface design focused on high usability and speed.",
-      image: "/gemini-ui-showcase.png",
-    },
-  ];
+  const [enquiryForm, setEnquiryForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [isSubmittingEnquiry, setIsSubmittingEnquiry] = useState(false);
+  const [enquiryStatus, setEnquiryStatus] = useState({ type: "", text: "" });
 
   const trustStats = [
     { value: "70%", label: "Tech-Led Positioning", desc: "Website, app, ERP, CRM, AI automation, and consulting-first transformation." },
@@ -173,45 +164,6 @@ export default function PodospherePortfolio() {
     "Lead-focused booking and contact prompts",
   ];
 
-  const services = [
-    {
-      badge: "Core Focus",
-      title: "Technology Consulting & Product Thinking",
-      desc: "For founders who need clarity on what to build, what to automate, and what systems will actually create scale.",
-      tags: ["Discovery", "Consulting", "Business Systems"],
-    },
-    {
-      badge: "Core Focus",
-      title: "High-Performance Websites & Landing Funnels",
-      desc: "Not just beautiful design. Conversion-led pages built to generate business enquiries, improve trust, and support sales conversations.",
-      tags: ["React", "Landing Pages", "CRO"],
-    },
-    {
-      badge: "Core Focus",
-      title: "ERP, CRM & Internal Workflow Systems",
-      desc: "Centralize operations, reporting, and team accountability with business systems that simplify execution.",
-      tags: ["CRM", "ERP", "Dashboards"],
-    },
-    {
-      badge: "Core Focus",
-      title: "AI Automation for Business Operations",
-      desc: "Automate repetitive work, internal communication, reporting, lead assignment, and decision support across departments.",
-      tags: ["Automation", "AI", "Efficiency"],
-    },
-    {
-      badge: "Growth Engine",
-      title: "Kotech Digital Hub for Marketing Growth",
-      desc: "Run performance marketing, content systems, ad creative production, and lead acquisition with a dedicated marketing arm.",
-      tags: ["Paid Media", "Content", "Lead Gen"],
-    },
-    {
-      badge: "Growth Engine",
-      title: "Podo Sale for Revenue Conversion",
-      desc: "Support sales teams with hiring, SOPs, scripts, outbound systems, and founder-level revenue process consulting.",
-      tags: ["Sales", "Hiring", "SOPs"],
-    },
-  ];
-
   const featurePages = [
     "Home with strong positioning and lead hooks",
     "About with founder story and trust-building copy",
@@ -242,8 +194,32 @@ export default function PodospherePortfolio() {
     
     { icon: Globe, href: "https://podospheretechnologies.com/", label: "Website" },
     { icon: Globe, href: "https://kotechdigitalhub.com/", label: "Kotech" },
-    { icon: Mail, href: "mailto:sushant.singh@podospheretechnologies.com", label: "Email" },
+    { icon: Mail, href: "mailto:info@podospheretechnologies.com", label: "Email" },
   ];
+
+  const handleEnquirySubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmittingEnquiry(true);
+    setEnquiryStatus({ type: "", text: "" });
+
+    try {
+      const response = await fetch("/api/enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(enquiryForm),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.message || "Unable to send enquiry right now.");
+
+      setEnquiryStatus({ type: "success", text: "Enquiry sent successfully. Our team will contact you shortly." });
+      setEnquiryForm({ name: "", email: "", phone: "", message: "" });
+    } catch (error) {
+      setEnquiryStatus({ type: "error", text: error.message || "Failed to send enquiry. Please try again." });
+    } finally {
+      setIsSubmittingEnquiry(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f7f6f3] text-[#080810]">
@@ -347,43 +323,6 @@ export default function PodospherePortfolio() {
               <p className="mt-3 text-base leading-8 text-[#5a5a72]">{desc}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="bg-white px-5 py-24 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeading
-            eyebrow="Interactive product visuals"
-            title="Homepage experiences that feel alive, modern, and conversion-ready."
-            desc="We integrated interactive visual blocks inspired by real AI workflow and assistant interfaces to make the website more engaging."
-          />
-
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {interactiveShowcase.map((item, index) => (
-              <motion.article
-                key={item.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
-                variants={fadeUp}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ y: -8, scale: 1.01 }}
-                className="group overflow-hidden rounded-[2rem] border border-[#e8e6e0] bg-[#f7f6f3] shadow-[0_18px_50px_rgba(0,0,0,0.04)] transition hover:border-[#2233ff]"
-              >
-                <div className="overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="h-[280px] w-full object-cover transition duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6 md:p-8">
-                  <h3 className="font-sans text-3xl font-bold tracking-[-0.03em]">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-[#5a5a72]">{item.desc}</p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -718,7 +657,7 @@ export default function PodospherePortfolio() {
                   Call Now
                 </a>
                 <a
-                  href="mailto:sushant.singh@podospheretechnologies.com"
+                  href="mailto:info@podospheretechnologies.com"
                   className="inline-flex items-center gap-2 rounded-full border border-white/35 px-7 py-4 text-sm font-extrabold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
                 >
                   <Mail className="h-4 w-4" />
@@ -727,19 +666,67 @@ export default function PodospherePortfolio() {
               </div>
             </div>
 
-            <div className="grid gap-4 rounded-[1.7rem] border border-white/15 bg-white/10 p-5">
-              {[
-                [Clock3, "Fast consultation", "Ideal for founders who need direction before investing in execution."],
-                [Users, "Business-first thinking", "We discuss systems, team process, lead journey, and scalable next steps."],
-                [Layers3, "Clear action mapping", "The goal is to move from confusion to a sharper path forward."],
-                [Star, "Lead-focused outcome", "The website is now structured to convert interest into better enquiries."],
-              ].map(([Icon, title, desc]) => (
-                <div key={title} className="rounded-[1.3rem] border border-white/15 bg-white/5 p-5">
-                  <Icon className="h-5 w-5 text-white" />
-                  <div className="mt-3 text-base font-bold">{title}</div>
-                  <p className="mt-2 text-sm leading-7 text-white/75">{desc}</p>
-                </div>
-              ))}
+            <div className="rounded-[1.7rem] border border-white/15 bg-white/10 p-5">
+              <div className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-white/70">New enquiry</div>
+              <h3 className="mt-3 text-2xl font-bold leading-tight">Send us your requirement</h3>
+              <form className="mt-6 grid gap-3" onSubmit={handleEnquirySubmit}>
+                <input
+                  type="text"
+                  required
+                  placeholder="Full name"
+                  value={enquiryForm.name}
+                  onChange={(event) => setEnquiryForm((prev) => ({ ...prev, name: event.target.value }))}
+                  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="Email address"
+                  value={enquiryForm.email}
+                  onChange={(event) => setEnquiryForm((prev) => ({ ...prev, email: event.target.value }))}
+                  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none"
+                />
+                <input
+                  type="tel"
+                  required
+                  placeholder="Phone number"
+                  value={enquiryForm.phone}
+                  onChange={(event) => setEnquiryForm((prev) => ({ ...prev, phone: event.target.value }))}
+                  className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none"
+                />
+                <textarea
+                  rows={4}
+                  required
+                  placeholder="Tell us about your requirement"
+                  value={enquiryForm.message}
+                  onChange={(event) => setEnquiryForm((prev) => ({ ...prev, message: event.target.value }))}
+                  className="w-full resize-none rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/60 focus:border-white/40 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmittingEnquiry}
+                  className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-extrabold uppercase tracking-[0.12em] text-[#2233ff] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isSubmittingEnquiry ? "Sending..." : "Send Enquiry"}
+                </button>
+                {enquiryStatus.text ? (
+                  <p className={`text-sm ${enquiryStatus.type === "success" ? "text-green-200" : "text-red-200"}`}>{enquiryStatus.text}</p>
+                ) : null}
+              </form>
+              <div className="mt-6 grid gap-3">
+                {[
+                  [Clock3, "Fast consultation", "Ideal for founders who need direction before investing in execution."],
+                  [Users, "Business-first thinking", "We discuss systems, team process, lead journey, and scalable next steps."],
+                  [Layers3, "Clear action mapping", "The goal is to move from confusion to a sharper path forward."],
+                  [Star, "Lead-focused outcome", "The website is now structured to convert interest into better enquiries."],
+                ].map(([Icon, title, desc]) => (
+                  <div key={title} className="rounded-[1.3rem] border border-white/15 bg-white/5 p-4">
+                    <Icon className="h-5 w-5 text-white" />
+                    <div className="mt-2 text-sm font-bold">{title}</div>
+                    <p className="mt-1 text-sm leading-6 text-white/75">{desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
