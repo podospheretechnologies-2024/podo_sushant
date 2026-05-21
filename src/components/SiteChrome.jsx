@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const solutionMenu = [
   { label: "Marketing consultancy", href: "https://media.podospheretechnologies.com/" },
   { label: "Sales consultancy", href: "/sales-consultancy" },
-  { label: "Funding consultancy", href: "https://media.podospheretechnologies.com/seed-funding-consultancy/" },
+  { label: "Funding consultancy", href: "https://startupsupport.podospheretechnologies.com/" },
   { label: "Technology consultancy", href: "#technology-consultancy" },
   { label: "Security", href: "https://primesecuresurveillance.com/" },
   { label: "Investment and finance", href: "https://evriddhi.in/" },

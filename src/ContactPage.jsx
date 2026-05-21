@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Mail, Phone } from "lucide-react";
 import CursorAura from "./components/CursorAura";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
-
+import SEO from "./components/SEO";
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,6 +34,10 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f6f3] text-[#080810]">
+      <SEO
+  title="Contact Podosphere Technologies | Book a Strategy Call"
+  description="Contact Podosphere Technologies to discuss websites, CRM, automation, AI tools, lead systems, and business growth solutions."
+/>
       <CursorAura />
       <SiteHeader basePath="/" />
 

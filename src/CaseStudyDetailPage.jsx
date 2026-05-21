@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import CursorAura from "./components/CursorAura";
-
+import SEO from "./components/SEO";
 export default function CaseStudyDetailPage({ caseStudy }) {
   if (!caseStudy) {
     return (
@@ -23,6 +23,10 @@ export default function CaseStudyDetailPage({ caseStudy }) {
 
   return (
     <div className="min-h-screen bg-[#f7f6f3] text-[#080810]">
+      <SEO
+  title={`${caseStudy.title} | Podosphere Technologies Case Study`}
+  description={caseStudy.result}
+/>
       <CursorAura />
       <SiteHeader basePath="/" />
 

@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import CursorAura from "./components/CursorAura";
+import SEO from "./components/SEO";
 import { caseStudiesData } from "./data/caseStudiesData";
 
 const fadeUp = {
@@ -223,6 +224,10 @@ export default function PodospherePortfolio() {
 
   return (
     <div className="min-h-screen bg-[#f7f6f3] text-[#080810]">
+      <SEO
+  title="Podosphere Technologies | Business Automation & Growth Systems"
+  description="Podosphere Technologies helps businesses grow with websites, CRM, ERP, automation, AI tools, lead systems, marketing, and sales execution."
+/>
       <CursorAura />
       <FloatingConsultCTA />
       <SiteHeader />

@@ -1,11 +1,16 @@
 import { ArrowRight } from "lucide-react";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import CursorAura from "./components/CursorAura";
+import SEO from "./components/SEO";
 import { caseStudiesData } from "./data/caseStudiesData";
 
 export default function CaseStudiesPage() {
   return (
     <div className="min-h-screen bg-[#f7f6f3] text-[#080810]">
+      <SEO
+  title="Case Studies | Podosphere Technologies"
+  description="Explore Podosphere Technologies case studies across websites, CRM, ERP, automation, AI systems, and business growth workflows."
+/>
       <CursorAura />
       <SiteHeader basePath="/" />
 
